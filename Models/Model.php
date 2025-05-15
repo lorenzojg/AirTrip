@@ -49,4 +49,17 @@ class Model
     $query->execute(['email' => $email]);
     return $query->fetch(PDO::FETCH_ASSOC);
 }
+    //Ajout de la methode insertUser (insertion dans la bdd apres le signUp) **HABDALLAHI
+    public function insertUser($firstname, $lastname, $email, $password, $id_role)
+    {
+        $requete = $this->bd->prepare("INSERT INTO users (firstname, lastname, mail, pwd, id_role) VALUES (:firstname, :lastname, :email, :password, :id_role)");
+        return $requete->execute([
+            'firstname' => $firstname,
+            'lastname'  => $lastname,
+            'email'     => $email,
+            'password'  => password_hash($password, PASSWORD_DEFAULT),
+            'id_role'   => $id_role
+        ]);
+       
+    }
 }
