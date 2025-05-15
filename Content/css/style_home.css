@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ----- HEADER ----- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    padding: 10px;
+    width: 200px;
+    z-index: 10;
+}
+
+.dropdown a {
+    display: block;
+    padding: 8px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown hr {
+    margin: 8px 0;
+}
+
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn.light {
+    background-color: transparent;
+    border: 2px solid #333;
+    color: #333;
+}
+
+.btn.dark {
+    background-color: #333;
+    color: white;
+}
+
+/* ----- HERO SECTION ----- */
+.hero {
+    height: calc(100vh - 80px);
+    background-image: url("../img/beach.jpg"); /* remplace par le vrai nom si besoin */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4); /* fonce légèrement pour la lisibilité du texte */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 64px;
+    margin-bottom: 10px;
+}
+
+.hero h1 .highlight {
+    color: #ff7e79;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.btn.large {
+    font-size: 18px;
+    padding: 12px 30px;
+    background-color: white;
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* ----- FOOTER ----- */
+footer {
+    text-align: left;
+    padding: 10px 30px;
+    background-color: #f0f0f0;
+    font-size: 14px;
+}
