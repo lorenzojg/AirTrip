@@ -34,14 +34,6 @@ class Model
         return self::$instance;
     }
 
-    
-    public function removeNobelPrize($id_np)
-    {
-        $requete = $this->bd->prepare("DELETE FROM nobels WHERE id = :id");
-        $requete->bindValue(':id', (int) $id_np, PDO::PARAM_INT);
-        $requete->execute();
-        return (bool) $requete->rowCount();
-    }
 
     public function getNbUsers()
     {
