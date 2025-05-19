@@ -41,10 +41,10 @@ class Controller_signup extends Controller
             return;
         }
 
-        // NB: LES GARS FAUT JAMAIS HASHER LE MOT DE PASS DANS LE SIGNUP VUE QUE CE SERA DEJA HASHER DANS LE MODEL ;)
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         
-        $success = $model->insertUser($firstname, $lastname, $email, $password, $id_role); 
+        $success = $model->insertUser($firstname, $lastname, $email, $hashedPassword, $id_role); 
 
         if ($success) {
             header("Location: ?controller=connection&action=login");
