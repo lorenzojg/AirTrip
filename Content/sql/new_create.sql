@@ -105,7 +105,7 @@ CREATE TABLE Users(
    lastname VARCHAR(50) ,
    firstname VARCHAR(50) ,
    mail VARCHAR(50) ,
-   pwd VARCHAR(50) ,
+   pwd VARCHAR(100) ,
    PRIMARY KEY(Id_Role, Id_User),
    FOREIGN KEY(Id_Role) REFERENCES Roles(Id_Role)
 );
