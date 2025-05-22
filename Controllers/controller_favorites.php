@@ -1,26 +1,43 @@
-<h1>Mes Favoris</h1>
+<?php
+require_once 'Models/Model.php';
 
-<?php if (empty($favorites)): ?>
-    <p>Aucun favori trouvé.</p>
-<?php else: ?>
-    <ul>
-        <?php foreach ($favorites as $fav): ?>
-            <li>
-                <strong>Type :</strong> <?= htmlspecialchars($fav['type']) ?><br>
+class Controller_favorites extends Controller
+{
+    public function action_default()
+    {
+        $this->action_listFavorites();
+    }
+    
+    public function action_listFavorites()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            header("Location: ?controller=home&action=home");
+            exit;
+        }
 
-                <?php if ($fav['type'] == 'room'): ?>
-                    Chambre : <?= htmlspecialchars($fav['room_name']) ?>
-                <?php elseif ($fav['type'] == 'rental'): ?>
-                    Location : <?= htmlspecialchars($fav['rental_name']) ?>
-                <?php elseif ($fav['type'] == 'activity'): ?>
-                    Activité : <?= htmlspecialchars($fav['activity_name']) ?>
-                <?php elseif ($fav['type'] == 'flight'): ?>
-                    Vol de <?= htmlspecialchars($fav['id_airport']) ?> à <?= htmlspecialchars($fav['id_airport_1']) ?>
-                <?php endif; ?>
+        $model = Model::getModel();
+        $favorites = $model->getFavoritesByUser($_SESSION['user']['id_user']);
+        $this->render("favorites", ["favorites" => $favorites]);
 
-                <!-- lien pour retirer des favoris -->
-                <a href="?controller=favorites&action=removeFavorite&id_favory=<?= $fav['id_favory'] ?>">❌ Retirer des favoris</a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+
+        $this->render("favorites", ["favorites" => $favorites]);
+    }
+
+    public function action_removeFavorite()
+    {
+        session_start();
+        if (!isset($_SESSION['user']) || !isset($_GET['id_favory'])) {
+            header("Location: ?controller=home&action=home");
+            exit;
+        }
+    
+        $idFavory = $_GET['id_favory'];
+        $model = Model::getModel();
+        $model->removeFavoriteById($idFavory);
+    
+        header("Location: ?controller=favorites&action=listFavorites");
+        exit;
+    }
+    
+}
