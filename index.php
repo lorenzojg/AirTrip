@@ -8,7 +8,7 @@ require_once "Models/Model.php";
 require_once "Controllers/Controller.php";
 
 //Liste des contrôleurs -- A RENSEIGNER
-$controllers = ["home","form","connection","signup"];
+$controllers = ["home","form","connection","signup","favorites"];
 //Nom du contrôleur par défaut-- A RENSEIGNER
 $controller_default = "home";
 
