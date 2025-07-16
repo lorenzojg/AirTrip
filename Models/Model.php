@@ -34,14 +34,6 @@ class Model
         return self::$instance;
     }
 
-    
-    public function removeNobelPrize($id_np)
-    {
-        $requete = $this->bd->prepare("DELETE FROM nobels WHERE id = :id");
-        $requete->bindValue(':id', (int) $id_np, PDO::PARAM_INT);
-        $requete->execute();
-        return (bool) $requete->rowCount();
-    }
 
     public function getNbUsers()
     {
@@ -57,4 +49,70 @@ class Model
     $query->execute(['email' => $email]);
     return $query->fetch(PDO::FETCH_ASSOC);
 }
+    
+    //Ajout de la methode insertUser (insertion dans la bdd apres le signUp) **HABDALLAHI
+    public function insertUser($firstname, $lastname, $email, $password, $id_role)
+    {
+        $requete = $this->bd->prepare("INSERT INTO users (firstname, lastname, mail, pwd, id_role) VALUES (:firstname, :lastname, :email, :password, :id_role)");
+        return $requete->execute([
+            'firstname' => $firstname,
+            'lastname'  => $lastname,
+            'email'     => $email,
+            'password'  => $password,
+            'id_role'   => $id_role
+        ]);
+       
+    }
+     public function getFavoritesByUser($userId)
+{
+    $favorites = [];
+
+    // 1. Rooms
+    $query = $this->bd->prepare("
+        SELECT r.*, 'room' AS type FROM favory f
+        JOIN room r ON f.id_room = r.id_room
+        WHERE f.id_user = :id_user AND f.id_room IS NOT NULL
+    ");
+    $query->execute(['id_user' => $userId]);
+    $favorites = array_merge($favorites, $query->fetchAll(PDO::FETCH_ASSOC));
+
+    // 2. Rentals
+    $query = $this->bd->prepare("
+        SELECT rent.*, 'rental' AS type FROM favory f
+        JOIN rental rent ON f.id_rental = rent.id_rental
+        WHERE f.id_user = :id_user AND f.id_rental IS NOT NULL
+    ");
+    $query->execute(['id_user' => $userId]);
+    $favorites = array_merge($favorites, $query->fetchAll(PDO::FETCH_ASSOC));
+
+    // 3. Activities
+    $query = $this->bd->prepare("
+        SELECT a.*, 'activity' AS type FROM favory f
+        JOIN activities a ON f.id_activities = a.id_activities
+        WHERE f.id_user = :id_user AND f.id_activities IS NOT NULL
+    ");
+    $query->execute(['id_user' => $userId]);
+    $favorites = array_merge($favorites, $query->fetchAll(PDO::FETCH_ASSOC));
+
+    // 4. Flights
+    $query = $this->bd->prepare("
+        SELECT fl.*, 'flight' AS type FROM favory f
+        JOIN flights fl ON f.id_flights = fl.id_flights
+            AND f.id_airport = fl.id_airport
+            AND f.id_airport_1 = fl.id_airport_1
+        WHERE f.id_user = :id_user AND f.id_flights IS NOT NULL
+    ");
+    $query->execute(['id_user' => $userId]);
+    $favorites = array_merge($favorites, $query->fetchAll(PDO::FETCH_ASSOC));
+
+    return $favorites;
+    }
+
+
+    public function removeFavoriteById($idFavory)
+    {
+        $query = $this->bd->prepare("DELETE FROM favory WHERE id_favory = :id_favory");
+        return $query->execute(['id_favory' => $idFavory]);
+    }
+
 }

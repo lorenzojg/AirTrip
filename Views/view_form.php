@@ -5,9 +5,11 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="./Content/css/globals.css" />
     <link rel="stylesheet" href="./Content/css/styleguide.css" />
-    <link rel="stylesheet" href="./Content/css/style_header.css">
     <script src="./Content/Javascript/script_menu_user.js"></script>
     <link rel="stylesheet" href="./Content/css/style.css" />
+    <link rel="stylesheet" href="./Content/css/style_header.css">
+    <link rel="stylesheet" href="./Content/css/style_form.css" />
+
     <title>SearchTrip - AirTrip</title>
   </head>
   <body>

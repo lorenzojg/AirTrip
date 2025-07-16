@@ -9,25 +9,6 @@
   width: var(--responsive-device-width);
 }
 
-.page-searchtrip .header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0px 137px;
-  padding: var(--size-space-800) var(--size-space-800) var(--size-space-800)
-    19px;
-  position: relative;
-  align-self: stretch;
-  width: var(--responsive-device-width);
-  flex: 0 0 auto;
-  background-color: var(--color-background-default-default);
-  border-top-style: none;
-  border-right-style: none;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-left-style: none;
-  border-color: var(--color-border-default-default);
-}
 
 .page-searchtrip .block {
   display: inline-flex;

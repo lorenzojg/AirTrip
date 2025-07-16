@@ -1,5 +1,5 @@
 <?php
-
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 //Pour avoir la fonction e()
 require_once "Utils/functions.php";
 //Inclusion du modèle
@@ -8,7 +8,7 @@ require_once "Models/Model.php";
 require_once "Controllers/Controller.php";
 
 //Liste des contrôleurs -- A RENSEIGNER
-$controllers = ["home","form","connection"];
+$controllers = ["home","form","connection","signup","favorites"];
 //Nom du contrôleur par défaut-- A RENSEIGNER
 $controller_default = "home";
 

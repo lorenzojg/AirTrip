@@ -61,3 +61,65 @@ WHERE
     AND a.end_date >= '2025-06-05';
 
 select * from users;
+
+
+-- Requête 4 : Afficher le nombre de villes visitées par un utilisateur spécifique en prennant en compte les activités, les vols et les hébergements
+
+SELECT
+  COUNT(DISTINCT C.name) AS nombre_de_villes_visitees
+FROM Users AS U
+JOIN Airtrip AS AT
+  ON U.Id_User = AT.Id_User
+JOIN (
+  SELECT
+    FB.Id_Trip,
+    L.Id_Cities
+  FROM Flight_booking AS FB
+  JOIN Flights AS F
+    ON FB.Id_Flights = F.Id_Flights
+  JOIN locate AS L
+    ON F.Id_Airport_1 = L.Id_Airport -- Jointure pour l'aéroport d'arrivée
+  UNION
+  -- Villes des activités
+  SELECT
+    AB.Id_Trip,
+    R.Id_Cities
+  FROM Activity_booking AS AB
+  JOIN Activities AS A
+    ON AB.Id_Activities = A.Id_Activities
+  JOIN Asso_16 AS AS16
+    ON A.Id_Activities = AS16.Id_Activities
+  JOIN Road AS R
+    ON AS16.Id_Road = R.Id_Road
+  UNION
+  -- Villes des hébergements (hôtels)
+  SELECT
+    HB.Id_Trip,
+    R.Id_Cities
+  FROM Hebergement_booking AS HB
+  JOIN Room AS R_room
+    ON HB.Id_Room = R_room.Id_Room
+  JOIN Hotel AS H
+    ON R_room.Id_Room = H.Id_Room
+  JOIN Hebergement AS H_heberg
+    ON H.Id_Hebergement = H_heberg.Id_Hebergement
+  JOIN Road AS R
+    ON H_heberg.Id_Road = R.Id_Road
+  UNION
+  -- Villes des hébergements (locations)
+  SELECT
+    HB.Id_Trip,
+    R.Id_Cities
+  FROM Hebergement_booking AS HB
+  JOIN rental AS R_rental
+    ON HB.Id_rental = R_rental.Id_rental
+  JOIN Hebergement AS H_heberg
+    ON R_rental.Id_Hebergement = H_heberg.Id_Hebergement
+  JOIN Road AS R
+    ON H_heberg.Id_Road = R.Id_Road
+) AS V
+  ON AT.Id_Trip = V.Id_Trip
+JOIN Cities AS C
+  ON V.Id_Cities = C.Id_Cities
+WHERE
+  U.Id_User = 1;
